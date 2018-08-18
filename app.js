@@ -10,18 +10,24 @@ const movieRouter = require('./routes/movie');
 const app = express();
 // db connection
 const db=require('./helper/db')();
+//Config
+const config=require('./config');
+//Middleware
+const verifyToken=require('./middleware/verify-token')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.set('api_secret_key',config.api_secret_key)
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api',verifyToken);
 app.use('/', indexRouter);
 app.use('/api/movies', movieRouter);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=> {
@@ -40,3 +46,4 @@ app.use((err, req, res, next)=> {
 });
 
 module.exports = app;
+
