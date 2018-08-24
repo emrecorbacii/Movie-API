@@ -39,7 +39,7 @@ router.get('/top10',(req,res,next)=>{
 });
 
 //Id'ye göre listeleme
-router.get('/md/:movie_id',(req,res,next)=>{
+router.get('/:movie_id',(req,res,next)=>{
   const promise=Movie.findById(req.params.movie_id);
 
   promise.then((data) => {

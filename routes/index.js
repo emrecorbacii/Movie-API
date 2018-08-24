@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const User=require('../models/User');
 /* GET home page. */
 router.get('/', (req, res, next)=> {
-  res.render('index', { title: 'Express' });
+  res.send('index');
 });
 
 //Register
@@ -69,11 +69,5 @@ router.post('/auth', (req, res, next)=> {
 
 
 });
-
-
-
-
-
-
 
 module.exports = router;

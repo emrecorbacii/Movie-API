@@ -5,14 +5,61 @@ const should=chai.should();
 const server=require('../app');
 
 chai.use(chaiHttp);
-
-describe('Node Server',()=>{
-    it('(POST /) add movie to db',(done)=>{
+let token,movieId;
+describe('/api/movies tests',()=>{
+    before((done)=>{
         chai.request(server)
-        .get('/api/movies')
+        .post('/auth')
+        .send({username:'uskeche', password:'4321'})
         .end((err,res)=>{
-            res.should.have.status(200);
+            token = res.body.token;
             done();
         });
     });
-});
+
+    describe('/GET Movies',()=>{
+            it('it should be GET all the movies',(done)=>{
+                chai.request(server)
+                .get('/api/movies')
+                .set('x-access-token',token)
+                .end((err,res)=>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                         done();
+                });
+            });
+         });
+
+    describe('/POST Movies',()=>{
+            it('it should be POST the movie',(done)=>{
+                chai.request(server)
+                .post('/api/movies')
+                .send({title:'Shawsank Redemption',category:'Drama'})
+                .set('x-access-token',token)
+                .end((err,res)=>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('title');
+                    res.body.should.have.property('category');
+                    movieId=res.body._id;
+                         done();
+                });
+            });
+         });   
+    describe('/GET :Movie_id',()=>{
+            it('it should be GET the movie from id',(done)=>{
+                chai.request(server)
+                .get('/api/movies/'+ movieId)
+                .set('x-access-token',token)
+                .end((err,res)=>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('title');
+                    res.body.should.have.property('category');
+                    res.body.should.have.property('_id').eql(movieId);
+                         done();
+                });
+            });
+         });    
+    });
+
