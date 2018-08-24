@@ -16,7 +16,6 @@ describe('/api/movies tests',()=>{
             done();
         });
     });
-
     describe('/GET Movies',()=>{
             it('it should be GET all the movies',(done)=>{
                 chai.request(server)
@@ -60,6 +59,37 @@ describe('/api/movies tests',()=>{
                          done();
                 });
             });
-         });    
+         }); 
+    describe('/PUT :Movie_id',()=>{
+            it('it should be UPDATE the movie given by id',(done)=>{
+                chai.request(server)
+                .put('/api/movies/'+ movieId)
+                .send({category:'Action'})
+                .set('x-access-token',token)
+                .end((err,res)=>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('title').eql('Shawsank Redemption');
+                    res.body.should.have.property('category').eql('Action');
+                    res.body.should.have.property('_id').eql(movieId);
+                         done();
+                });
+            });
+         });
+       
+    describe('/DELETE :Movie_id',()=>{
+            it('it should be DELETE the movie given by id',(done)=>{
+                chai.request(server)
+                .delete('/api/movies/'+ movieId)
+                .set('x-access-token',token)
+                .end((err,res)=>{
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('status').eql(1);
+
+                         done();
+                });
+            });
+         });          
     });
 
