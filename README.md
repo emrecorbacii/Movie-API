@@ -1,4 +1,4 @@
-[![Build status](https://api.travis-ci.org/uskeche/Movie-API.svg)](https://api.travis-ci.org/uskeche/Movie-API.svg)
+[![Build status](https://api.travis-ci.org/uskeche/Movie-API.svg)](https://travis-ci.org/uskeche/Movie-API)
 
 # Movies
 
