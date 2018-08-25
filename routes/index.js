@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const User=require('../models/User');
 /* GET home page. */
 router.get('/', (req, res, next)=> {
-  res.send('AUTO DEPLOY SUCCEEEEEEEDDDDDDD !!!!!!!!!!!!!!!!!!!!');
+  res.send('AUTO DEPLOY FAİL TEST');
 });
 
 //Register
